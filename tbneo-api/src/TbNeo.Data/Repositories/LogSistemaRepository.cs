@@ -30,7 +30,9 @@ namespace TbNeo.Data.Repositories
             return await
                         _context
                             .LogSistemas
+                            .Include(p=>p.AlteradoPor)
                             .Where(p => p.Reference == reference)
+                            .OrderByDescending(p=> p.AlteradoEm)
                             .ToListAsync();
         }
     }
