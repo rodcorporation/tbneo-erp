@@ -9,5 +9,7 @@
         public string IdProjeto { get; set; }
 
         public string NomeProjeto { get; set; }
+
+        public string IdLogReference { get; set; }
     }
 }

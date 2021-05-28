@@ -24,7 +24,8 @@ namespace TbNeo.Application.Queries
                                                     uc.nome as CriadoPor,
                                                     p.CriadoEm,
                                                     ua.nome as AtualizadoPor,
-                                                    p.AtualizadoEm
+                                                    p.AtualizadoEm,
+                                                    p.idLogReference
                                     FROM            dbo.Projeto p
                                     INNER JOIN      dbo.Usuario uc
                                     ON              p.IdCriadoPor = uc.id
@@ -49,7 +50,8 @@ namespace TbNeo.Application.Queries
                                                     uc.nome as CriadoPor,
                                                     p.CriadoEm,
                                                     ua.nome as AtualizadoPor,
-                                                    p.AtualizadoEm
+                                                    p.AtualizadoEm,
+                                                    p.idLogReference
                                     FROM            dbo.Projeto p
                                     INNER JOIN      dbo.Usuario uc
                                     ON              p.IdCriadoPor = uc.id

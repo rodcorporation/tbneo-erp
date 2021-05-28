@@ -20,7 +20,8 @@ namespace TbNeo.Application.Queries
                                     SELECT          ff.id,
                                                     ff.nome,
                                                     p.id as idProjeto,
-                                                    p.nome as nomeProjeto
+                                                    p.nome as nomeProjeto,
+                                                    ff.idLogReference
                                     FROM            dbo.FeatureFlag ff
                                     INNER JOIN      dbo.Projeto p
                                     ON              ff.idProjeto = p.Id;
@@ -41,7 +42,8 @@ namespace TbNeo.Application.Queries
                                     SELECT          ff.id,
                                                     ff.nome,
                                                     p.id as idProjeto,
-                                                    p.nome as nomeProjeto
+                                                    p.nome as nomeProjeto,
+                                                    ff.idLogReference
                                     FROM            dbo.FeatureFlag ff
                                     INNER JOIN      dbo.Projeto p
                                     ON              ff.idProjeto = p.Id
