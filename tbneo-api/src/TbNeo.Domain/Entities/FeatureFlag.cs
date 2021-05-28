@@ -62,6 +62,16 @@ namespace TbNeo.Domain.Entities
             }
 
             Nome = nome;
+
+            if (Projeto.Id != projeto.Id)
+            {
+                _events.Add(new DataChangedEvent(this.IdLogReference,
+                                                 nameof(Projeto),
+                                                 projeto.Nome,
+                                                 Projeto.Nome,
+                                                 alteradoPor.Id));
+            }
+
             Projeto = projeto;
             IdProjeto = projeto.Id;
 
@@ -69,8 +79,6 @@ namespace TbNeo.Domain.Entities
             IdAtualizadoPor = alteradoPor.Id;
 
             AtualizadoEm = DateTime.Now;
-
-
         }
 
         #endregion

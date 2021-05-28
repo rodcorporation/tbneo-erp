@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TbNeo.Domain.Core;
+using TbNeo.Domain.Core.Events;
 
 namespace TbNeo.Domain.Entities
 {
@@ -67,8 +68,37 @@ namespace TbNeo.Domain.Entities
                             string urlJira,
                             Usuario atualizadoPor)
         {
+            if (!Nome.Equals(nome))
+            {
+                _events.Add(new DataChangedEvent(this.IdLogReference,
+                                                 nameof(Nome),
+                                                 nome,
+                                                 Nome,
+                                                 atualizadoPor.Id));
+            }
+
             Nome = nome;
+
+            if (!Descricao.Equals(descricao))
+            {
+                _events.Add(new DataChangedEvent(this.IdLogReference,
+                                                 nameof(Descricao),
+                                                 descricao,
+                                                 Descricao,
+                                                 atualizadoPor.Id));
+            }
+
             Descricao = descricao;
+
+            if (!UrlJira.Equals(urlJira))
+            {
+                _events.Add(new DataChangedEvent(this.IdLogReference,
+                                                 nameof(UrlJira),
+                                                 urlJira,
+                                                 UrlJira,
+                                                 atualizadoPor.Id));
+            }
+
             UrlJira = urlJira;
 
             AtualizadoPor = atualizadoPor;
