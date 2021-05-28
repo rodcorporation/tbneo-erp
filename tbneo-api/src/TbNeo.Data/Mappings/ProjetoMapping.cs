@@ -21,11 +21,6 @@ namespace TbNeo.Data.Mappings
 
             builder
                 .Property(p => p.Descricao)
-                .HasColumnType("varchar(500)")
-                .IsRequired();
-
-            builder
-                .Property(p => p.Descricao)
                 .HasColumnType("varchar(500)");
 
             builder

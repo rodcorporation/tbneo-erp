@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using TbNeo.Api.Controllers;
@@ -10,6 +11,7 @@ using TbNeo.Domain.Core.Communication.Notifications;
 
 namespace TbNeo.Api.V1.Controllers
 {
+    [Authorize]
     [Route("api/v1/projeto")]
     public class ProjetoController : TbNeoControllerBase
     {
@@ -47,7 +49,7 @@ namespace TbNeo.Api.V1.Controllers
             await _mediatorHandler.EnviarComando(new ProjetoCadastrarCommand(inputModel.Nome,
                                                                              inputModel.Descricao,
                                                                              inputModel.UrlJira,
-                                                                             inputModel.IdUsuario));
+                                                                             this.UsuarioId));
 
             return CustomResponse();
         }
@@ -62,7 +64,7 @@ namespace TbNeo.Api.V1.Controllers
                                                                           inputModel.Nome,
                                                                           inputModel.Descricao,
                                                                           inputModel.UrlJira,
-                                                                          inputModel.IdUsuario));
+                                                                          this.UsuarioId));
 
             return CustomResponse();
         }

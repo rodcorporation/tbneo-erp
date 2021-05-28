@@ -18,7 +18,7 @@ namespace TbNeo.Application.Queries
             var statement = @"
 
                                     SELECT          *
-                                    FROM            dbo.FeatureFlags;
+                                    FROM            dbo.FeatureFlag;
 
                             ";
 
@@ -34,7 +34,7 @@ namespace TbNeo.Application.Queries
             var statement = @"
 
                                     SELECT          *
-                                    FROM            dbo.FeatureFlags
+                                    FROM            dbo.FeatureFlag
                                     WHERE           id = @id;
 
                             ";

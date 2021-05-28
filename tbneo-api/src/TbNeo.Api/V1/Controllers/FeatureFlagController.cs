@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using TbNeo.Api.Controllers;
@@ -10,6 +11,7 @@ using TbNeo.Domain.Core.Communication.Notifications;
 
 namespace TbNeo.Api.V1.Controllers
 {
+    [Authorize]
     [Route("api/v1/feature-flag")]
     public class FeatureFlagController : TbNeoControllerBase
     {

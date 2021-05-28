@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 using TbNeo.Domain.Core;
 using TbNeo.Domain.Entities;
 
 namespace TbNeo.Data
 {
-    public class TbNeoContext : DbContext, IUnitOfWork
+    public class TbNeoContext : DbContext, IUnitOfWork, IDatabaseMigration
     {
         #region DbSets
         
@@ -45,6 +46,18 @@ namespace TbNeo.Data
         public async Task Commit()
         {
             await this.SaveChangesAsync();
+        }
+
+        #endregion
+
+        #region IDatabaseMigration
+
+        public async Task ApplyMigrations()
+        {
+            if((await Database.GetPendingMigrationsAsync()).Any())
+            {
+                await Database.MigrateAsync();
+            }
         }
 
         #endregion

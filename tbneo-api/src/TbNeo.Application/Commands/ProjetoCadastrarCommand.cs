@@ -40,9 +40,9 @@ namespace TbNeo.Application.Commands
             RuleFor(p => p.Nome)
                 .NotEmpty().WithMessage("O nome precisa ser preenchido")
                 .MaximumLength(100).WithMessage("O nome suporta no máximo 100 caracteres");
-            
+
             RuleFor(p => p.Descricao)
-                .Must(p=> !string.IsNullOrWhiteSpace(p) && p.Length > 500).WithMessage("A descrição suporta no máximo 500 caracteres");
+                .Must(p => string.IsNullOrWhiteSpace(p) || (!string.IsNullOrWhiteSpace(p) && p.Length <= 500)).WithMessage("A descrição suporta no máximo 500 caracteres");
 
             RuleFor(p => p.UrlJira)
                 .NotEmpty().WithMessage("A url do jira precisa ser preenchida")

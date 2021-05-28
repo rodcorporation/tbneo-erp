@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -47,33 +48,33 @@ namespace TbNeo.Api.Controllers
             }
         }
 
-        //protected Guid UsuarioId
-        //{
-        //    get
-        //    {
-        //        var jwt = AuthorizationDecryptedToken;
+        protected int UsuarioId
+        {
+            get
+            {
+                var jwt = AuthorizationDecryptedToken;
 
-        //        var claimUsuarioId = jwt.Claims.FirstOrDefault(f => f.Type.Equals("UsuarioId"));
+                var claimUsuarioId = jwt.Claims.FirstOrDefault(f => f.Type.Equals("UsuarioId"));
 
-        //        Guid.TryParse(claimUsuarioId.Value, out var usuarioId);
+                int.TryParse(claimUsuarioId.Value, out var usuarioId);
 
-        //        return usuarioId;
-        //    }
-        //}
+                return usuarioId;
+            }
+        }
 
-        //protected string UsuarioEmail
-        //{
-        //    get
-        //    {
-        //        var jwt = AuthorizationDecryptedToken;
+        protected string UsuarioEmail
+        {
+            get
+            {
+                var jwt = AuthorizationDecryptedToken;
 
-        //        var claimUsuarioEmail = jwt.Claims.FirstOrDefault(f => f.Type.Equals("UsuarioEmail"));
+                var claimUsuarioEmail = jwt.Claims.FirstOrDefault(f => f.Type.Equals("UsuarioEmail"));
 
-        //        var usuarioEmail = Convert.ToString(claimUsuarioEmail.Value);
+                var usuarioEmail = Convert.ToString(claimUsuarioEmail.Value);
 
-        //        return usuarioEmail;
-        //    }
-        //}
+                return usuarioEmail;
+            }
+        }
 
         #endregion
 

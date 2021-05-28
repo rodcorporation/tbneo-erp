@@ -23,7 +23,7 @@ namespace TbNeo.Application.Commands
                                     string urlJira,
                                     int idUsuario)
         {
-            IdProjeto = IdProjeto;
+            IdProjeto = idProjeto;
             Nome = nome;
             Descricao = descricao;
             UrlJira = urlJira;
@@ -42,7 +42,7 @@ namespace TbNeo.Application.Commands
     {
         public ProjetoEditarValidation()
         {
-            RuleFor(p => p.IdUsuario)
+            RuleFor(p => p.IdProjeto)
                 .GreaterThan(0).WithMessage("O projeto precisa ser selecionado.");
 
             RuleFor(p => p.Nome)
@@ -50,7 +50,7 @@ namespace TbNeo.Application.Commands
                 .MaximumLength(100).WithMessage("O nome suporta no máximo 100 caracteres");
 
             RuleFor(p => p.Descricao)
-                .Must(p => !string.IsNullOrWhiteSpace(p) && p.Length > 500).WithMessage("A descrição suporta no máximo 500 caracteres");
+                .Must(p => string.IsNullOrWhiteSpace(p) || (!string.IsNullOrWhiteSpace(p) && p.Length <= 500)).WithMessage("A descrição suporta no máximo 500 caracteres");
 
             RuleFor(p => p.UrlJira)
                 .NotEmpty().WithMessage("A url do jira precisa ser preenchida")

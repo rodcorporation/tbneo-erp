@@ -18,7 +18,7 @@ namespace TbNeo.Application.Queries
             var statement = @"
 
                                     SELECT          *
-                                    FROM            dbo.Projetos;
+                                    FROM            dbo.Projeto;
 
                             ";
 
@@ -32,7 +32,7 @@ namespace TbNeo.Application.Queries
             var statement = @"
 
                                     SELECT          *
-                                    FROM            dbo.Projetos
+                                    FROM            dbo.Projeto
                                     WHERE           id = @id;
 
                             ";

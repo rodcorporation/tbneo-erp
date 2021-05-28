@@ -23,6 +23,8 @@ namespace TbNeo.WebApp.Api
             services.AddControllers();
 
             services.AddEntityFrameworkConfigureServices(Configuration)
+                    .AddAppSettingsConfigureServices(Configuration)
+                    .AddAuthenticationConfigureServices(Configuration)
                     .AddDependencyInjectionConfigureServices()
                     .AddMediatorConfigureServices()
                     .AddCompressionConfigureServices()
@@ -43,6 +45,7 @@ namespace TbNeo.WebApp.Api
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
