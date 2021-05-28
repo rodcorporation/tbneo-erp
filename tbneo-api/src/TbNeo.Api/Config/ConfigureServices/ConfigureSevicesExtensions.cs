@@ -12,11 +12,13 @@ using System.Text;
 using TbNeo.Api.Config.AppSettingsModel;
 using TbNeo.Application.Commands;
 using TbNeo.Application.Commands.Handlers;
+using TbNeo.Application.Events.Handlers;
 using TbNeo.Application.Queries;
 using TbNeo.Data;
 using TbNeo.Data.Repositories;
 using TbNeo.Domain.Core.Communication.Mediator;
 using TbNeo.Domain.Core.Communication.Notifications;
+using TbNeo.Domain.Core.Events;
 using TbNeo.Domain.Repositories;
 using TbNeo.WebApp.Api;
 
@@ -87,6 +89,9 @@ namespace TbNeo.Api.Config.ConfigureServices
             services.AddScoped<INotificationHandler<Notification>, NotificationHandler>();
 
             // Queries
+            services.AddScoped<INotificationHandler<DataChangedEvent>, LogEventHandler>();
+
+            // Queries
 
             services.AddScoped<IProjetoQueries, ProjetoQueries>();
             services.AddScoped<IFeatureFlagQueries, FeatureFlagQueries>();
@@ -102,6 +107,7 @@ namespace TbNeo.Api.Config.ConfigureServices
             services.AddScoped<IProjetoRepository, ProjetoRepository>();
             services.AddScoped<IFeatureFlagRepository, FeatureFlagRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<ILogSistemaRepository, LogSistemaRepository>();
 
             // Database
             services.AddScoped<IDatabaseMigration, TbNeoContext>();

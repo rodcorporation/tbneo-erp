@@ -10,11 +10,15 @@ namespace TbNeo.Application.Commands
 
         public int IdProjeto { get; private set; }
 
+        public int IdUsuario { get; private set; }
+
         public FeatureFlagCadastrarCommand(string nome,
-                                           int idProjeto)
+                                           int idProjeto,
+                                           int idUsuario)
         {
             Nome = nome;
             IdProjeto = idProjeto;
+            IdUsuario = idUsuario;
         }
 
         public override async Task<bool> IsValid()
@@ -34,7 +38,10 @@ namespace TbNeo.Application.Commands
                 .MaximumLength(100).WithMessage("O campo nome suporta no máximo 100 caracteres");
 
             RuleFor(p => p.IdProjeto)
-                .GreaterThan(0).WithMessage("O projecto precisa ser selecionado.");
+                .GreaterThan(0).WithMessage("O projeto precisa ser selecionado.");
+
+            RuleFor(p => p.IdUsuario)
+                .GreaterThan(0).WithMessage("O usuário precisa ser selecionado.");
         }
     }
 }

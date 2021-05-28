@@ -47,7 +47,8 @@ namespace TbNeo.Api.V1.Controllers
             if (this.ModelInvalida()) return CustomResponseErroModelInvalida();
 
             await _mediatorHandler.EnviarComando(new FeatureFlagCadastrarCommand(inputModel.Nome,
-                                                                                 inputModel.IdProjeto));
+                                                                                 inputModel.IdProjeto,
+                                                                                 this.UsuarioId));
 
             return CustomResponse();
         }
@@ -60,7 +61,8 @@ namespace TbNeo.Api.V1.Controllers
 
             await _mediatorHandler.EnviarComando(new FeatureFlagEditarCommand(id,
                                                                               inputModel.Nome,
-                                                                              inputModel.IdProjeto));
+                                                                              inputModel.IdProjeto,
+                                                                              this.UsuarioId));
 
             return CustomResponse();
         }

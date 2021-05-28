@@ -11,7 +11,7 @@ namespace TbNeo.Data
 
             optionsBuilder.UseSqlServer("Server=.;Initial Catalog=TbNeo;Integrated Security=true;");
 
-            return new TbNeoContext(optionsBuilder.Options);
+            return new TbNeoContext(optionsBuilder.Options, null);
         }
     }
 }

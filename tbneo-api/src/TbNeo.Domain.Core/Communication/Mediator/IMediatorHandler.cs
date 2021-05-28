@@ -8,5 +8,7 @@ namespace TbNeo.Domain.Core.Communication.Mediator
         Task<bool> EnviarComando<T>(T command) where T : Command;
 
         Task Notificar(Notification notification);
+
+        Task PublicarEvento<T>(T @event) where T : Event;
     }
 }

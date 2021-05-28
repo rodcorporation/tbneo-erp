@@ -10,7 +10,7 @@ using TbNeo.Data;
 namespace TbNeo.Data.Migrations
 {
     [DbContext(typeof(TbNeoContext))]
-    [Migration("20210528042540_EstruturaInicial")]
+    [Migration("20210528054940_EstruturaInicial")]
     partial class EstruturaInicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,6 +28,27 @@ namespace TbNeo.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime?>("AtualizadoEm")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("AtualizadoPorId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CriadoPorId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdAtualizadoPor")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdCriadoPor")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("IdLogReference")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("IdProjeto")
                         .HasColumnType("int");
 
@@ -37,9 +58,49 @@ namespace TbNeo.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AtualizadoPorId");
+
+                    b.HasIndex("CriadoPorId");
+
                     b.HasIndex("IdProjeto");
 
                     b.ToTable("FeatureFlag");
+                });
+
+            modelBuilder.Entity("TbNeo.Domain.Entities.LogSistema", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("AlteradoEm")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IdAlteradoPor")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("IdLogReference")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("NomeCampo")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<Guid>("Reference")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ValorAntigo")
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("ValorNovo")
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdAlteradoPor");
+
+                    b.ToTable("LogSistema");
                 });
 
             modelBuilder.Entity("TbNeo.Domain.Entities.Projeto", b =>
@@ -63,6 +124,9 @@ namespace TbNeo.Data.Migrations
 
                     b.Property<int>("IdCriadoPor")
                         .HasColumnType("int");
+
+                    b.Property<Guid>("IdLogReference")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -92,6 +156,9 @@ namespace TbNeo.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
+                    b.Property<Guid>("IdLogReference")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("varchar(100)");
@@ -110,13 +177,36 @@ namespace TbNeo.Data.Migrations
 
             modelBuilder.Entity("TbNeo.Domain.Entities.FeatureFlag", b =>
                 {
+                    b.HasOne("TbNeo.Domain.Entities.Usuario", "AtualizadoPor")
+                        .WithMany()
+                        .HasForeignKey("AtualizadoPorId");
+
+                    b.HasOne("TbNeo.Domain.Entities.Usuario", "CriadoPor")
+                        .WithMany()
+                        .HasForeignKey("CriadoPorId");
+
                     b.HasOne("TbNeo.Domain.Entities.Projeto", "Projeto")
                         .WithMany("FeatureFlags")
                         .HasForeignKey("IdProjeto")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("AtualizadoPor");
+
+                    b.Navigation("CriadoPor");
+
                     b.Navigation("Projeto");
+                });
+
+            modelBuilder.Entity("TbNeo.Domain.Entities.LogSistema", b =>
+                {
+                    b.HasOne("TbNeo.Domain.Entities.Usuario", "AlteradoPor")
+                        .WithMany()
+                        .HasForeignKey("IdAlteradoPor")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AlteradoPor");
                 });
 
             modelBuilder.Entity("TbNeo.Domain.Entities.Projeto", b =>

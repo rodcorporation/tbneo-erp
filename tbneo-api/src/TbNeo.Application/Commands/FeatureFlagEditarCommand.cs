@@ -11,14 +11,18 @@ namespace TbNeo.Application.Commands
         public string Nome { get; private set; }
 
         public int IdProjeto { get; private set; }
+        
+        public int IdUsuario { get; private set; }
 
         public FeatureFlagEditarCommand(int idFeatureFlag,
                                         string nome,
-                                        int idProjeto)
+                                        int idProjeto,
+                                        int idUsuario)
         {
             IdFeatureFlag = idFeatureFlag;
             Nome = nome;
             IdProjeto = idProjeto;
+            IdUsuario = idUsuario;
         }
 
         public override async Task<bool> IsValid()
@@ -42,6 +46,9 @@ namespace TbNeo.Application.Commands
 
             RuleFor(p => p.IdProjeto)
                 .GreaterThan(0).WithMessage("O projeto precisa ser selecionado.");
+
+            RuleFor(p => p.IdUsuario)
+                .GreaterThan(0).WithMessage("O usuário precisa ser selecionado.");
         }
     }
 }

@@ -22,5 +22,10 @@ namespace TbNeo.Domain.Core.Communication.Mediator
         {
             await _mediator.Publish(notification);
         }
+
+        public async Task PublicarEvento<T>(T @event) where T : Event
+        {
+            await _mediator.Publish(@event);
+        }
     }
 }

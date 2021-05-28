@@ -15,11 +15,37 @@ namespace TbNeo.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "varchar(100)", nullable: false),
                     Email = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Senha = table.Column<string>(type: "varchar(100)", nullable: false)
+                    Senha = table.Column<string>(type: "varchar(100)", nullable: false),
+                    IdLogReference = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuario", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LogSistema",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Reference = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NomeCampo = table.Column<string>(type: "varchar(100)", nullable: false),
+                    ValorNovo = table.Column<string>(type: "varchar(100)", nullable: true),
+                    ValorAntigo = table.Column<string>(type: "varchar(100)", nullable: true),
+                    AlteradoEm = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IdAlteradoPor = table.Column<int>(type: "int", nullable: false),
+                    IdLogReference = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LogSistema", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LogSistema_Usuario_IdAlteradoPor",
+                        column: x => x.IdAlteradoPor,
+                        principalTable: "Usuario",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -34,7 +60,8 @@ namespace TbNeo.Data.Migrations
                     CriadoEm = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AtualizadoEm = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IdCriadoPor = table.Column<int>(type: "int", nullable: false),
-                    IdAtualizadoPor = table.Column<int>(type: "int", nullable: true)
+                    IdAtualizadoPor = table.Column<int>(type: "int", nullable: true),
+                    IdLogReference = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,7 +87,14 @@ namespace TbNeo.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "varchar(100)", nullable: false),
-                    IdProjeto = table.Column<int>(type: "int", nullable: false)
+                    CriadoPorId = table.Column<int>(type: "int", nullable: true),
+                    CriadoEm = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AtualizadoPorId = table.Column<int>(type: "int", nullable: true),
+                    AtualizadoEm = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IdProjeto = table.Column<int>(type: "int", nullable: false),
+                    IdCriadoPor = table.Column<int>(type: "int", nullable: false),
+                    IdAtualizadoPor = table.Column<int>(type: "int", nullable: true),
+                    IdLogReference = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -71,12 +105,39 @@ namespace TbNeo.Data.Migrations
                         principalTable: "Projeto",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FeatureFlag_Usuario_AtualizadoPorId",
+                        column: x => x.AtualizadoPorId,
+                        principalTable: "Usuario",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_FeatureFlag_Usuario_CriadoPorId",
+                        column: x => x.CriadoPorId,
+                        principalTable: "Usuario",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FeatureFlag_AtualizadoPorId",
+                table: "FeatureFlag",
+                column: "AtualizadoPorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FeatureFlag_CriadoPorId",
+                table: "FeatureFlag",
+                column: "CriadoPorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FeatureFlag_IdProjeto",
                 table: "FeatureFlag",
                 column: "IdProjeto");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LogSistema_IdAlteradoPor",
+                table: "LogSistema",
+                column: "IdAlteradoPor");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Projeto_IdAtualizadoPor",
@@ -99,6 +160,9 @@ namespace TbNeo.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "FeatureFlag");
+
+            migrationBuilder.DropTable(
+                name: "LogSistema");
 
             migrationBuilder.DropTable(
                 name: "Projeto");

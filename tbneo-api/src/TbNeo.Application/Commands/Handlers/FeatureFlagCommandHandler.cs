@@ -16,13 +16,16 @@ namespace TbNeo.Application.Commands.Handlers
     {
         private IFeatureFlagRepository _featureFlagRepository;
         private IProjetoRepository _projetoRepository;
+        private IUsuarioRepository _usuarioRepository;
 
         public FeatureFlagCommandHandler(IMediatorHandler mediatorHandler,
                                          IFeatureFlagRepository featureFlagRepository,
+                                         IUsuarioRepository usuarioRepository,
                                          IProjetoRepository projetoRepository) : base(mediatorHandler)
         {
             _featureFlagRepository = featureFlagRepository;
             _projetoRepository = projetoRepository;
+            _usuarioRepository = usuarioRepository;
         }
 
         public async Task<bool> Handle(FeatureFlagCadastrarCommand command,
@@ -30,6 +33,17 @@ namespace TbNeo.Application.Commands.Handlers
         {
             // Fail Fast Validation
             if (!await ValidCommand(command)) return false;
+
+            // Procura o usuario
+            var usuario = await _usuarioRepository.Get(command.IdUsuario);
+
+            // Se não existir, notifica;
+            if (usuario == null)
+            {
+                await _mediatorHandler.Notificar(new Notification("O usuário não foi informado não foi encontrado."));
+
+                return false;
+            }
 
             // Procura o projeto
             var projeto = await _projetoRepository.Get(command.IdProjeto);
@@ -44,7 +58,8 @@ namespace TbNeo.Application.Commands.Handlers
 
             // Cria uma nova feature flag.
             var featureFlag = new FeatureFlag(command.Nome,
-                                              projeto);
+                                              projeto,
+                                              usuario);
 
             // Cadastra uma feature flag;
             await _featureFlagRepository.Add(featureFlag);
@@ -60,6 +75,17 @@ namespace TbNeo.Application.Commands.Handlers
         {
             // Fail Fast Validation
             if (!await ValidCommand(command)) return false;
+
+            // Procura o usuario
+            var usuario = await _usuarioRepository.Get(command.IdUsuario);
+
+            // Se não existir, notifica;
+            if (usuario == null)
+            {
+                await _mediatorHandler.Notificar(new Notification("O usuário não foi informado não foi encontrado."));
+
+                return false;
+            }
 
             // Procura o projeto
             var projeto = await _projetoRepository.Get(command.IdProjeto);
@@ -85,7 +111,8 @@ namespace TbNeo.Application.Commands.Handlers
 
             // Atualilza os dados da feature flag;
             featureFlag.Alterar(command.Nome,
-                                projeto);
+                                projeto,
+                                usuario);
 
             // Atualilza a feature flag;
             _featureFlagRepository.Update(featureFlag);
