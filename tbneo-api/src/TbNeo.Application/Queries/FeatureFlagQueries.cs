@@ -17,8 +17,13 @@ namespace TbNeo.Application.Queries
         {
             var statement = @"
 
-                                    SELECT          *
-                                    FROM            dbo.FeatureFlag;
+                                    SELECT          ff.id,
+                                                    ff.nome,
+                                                    p.id as idProjeto,
+                                                    p.nome as nomeProjeto
+                                    FROM            dbo.FeatureFlag ff
+                                    INNER JOIN      dbo.Projeto p
+                                    ON              ff.idProjeto = p.Id;
 
                             ";
 
@@ -33,9 +38,14 @@ namespace TbNeo.Application.Queries
         {
             var statement = @"
 
-                                    SELECT          *
-                                    FROM            dbo.FeatureFlag
-                                    WHERE           id = @id;
+                                    SELECT          ff.id,
+                                                    ff.nome,
+                                                    p.id as idProjeto,
+                                                    p.nome as nomeProjeto
+                                    FROM            dbo.FeatureFlag ff
+                                    INNER JOIN      dbo.Projeto p
+                                    ON              ff.idProjeto = p.Id
+                                    WHERE           ff.id = @id;
 
                             ";
 

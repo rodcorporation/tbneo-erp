@@ -17,8 +17,19 @@ namespace TbNeo.Application.Queries
         {
             var statement = @"
 
-                                    SELECT          *
-                                    FROM            dbo.Projeto;
+                                    SELECT          p.id,
+                                                    p.nome,
+                                                    p.descricao,
+                                                    p.UrlJira,
+                                                    uc.nome as CriadoPor,
+                                                    p.CriadoEm,
+                                                    ua.nome as AtualizadoPor,
+                                                    p.AtualizadoEm
+                                    FROM            dbo.Projeto p
+                                    INNER JOIN      dbo.Usuario uc
+                                    ON              p.IdCriadoPor = uc.id
+                                    LEFT JOIN      dbo.Usuario ua
+                                    ON              p.idAtualizadoPor = ua.id;
 
                             ";
 
@@ -31,9 +42,20 @@ namespace TbNeo.Application.Queries
         {
             var statement = @"
 
-                                    SELECT          *
-                                    FROM            dbo.Projeto
-                                    WHERE           id = @id;
+                                    SELECT          p.id,
+                                                    p.nome,
+                                                    p.descricao,
+                                                    p.UrlJira,
+                                                    uc.nome as CriadoPor,
+                                                    p.CriadoEm,
+                                                    ua.nome as AtualizadoPor,
+                                                    p.AtualizadoEm
+                                    FROM            dbo.Projeto p
+                                    INNER JOIN      dbo.Usuario uc
+                                    ON              p.IdCriadoPor = uc.id
+                                    INNER JOIN      dbo.Usuario ua
+                                    ON              p.idAtualizadoPor = ua.id
+                                    WHERE           p.id = @id;
 
                             ";
 
