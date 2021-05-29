@@ -1,4 +1,6 @@
-﻿namespace TbNeo.Application.Queries.QueryModels
+﻿using System;
+
+namespace TbNeo.Application.Queries.QueryModels
 {
     public class FeatureFlagListagemQueryModel
     {
@@ -10,6 +12,6 @@
 
         public string NomeProjeto { get; set; }
 
-        public string IdLogReference { get; set; }
+        public Guid IdLogReference { get; set; }
     }
 }

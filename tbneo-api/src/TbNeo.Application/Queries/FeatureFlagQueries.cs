@@ -13,7 +13,7 @@ namespace TbNeo.Application.Queries
         {
         }
 
-        public async Task<IEnumerable<FeatureFlagListagemQueryModel>> Listar()
+        public async Task<IEnumerable<FeatureFlagListagemQueryModel>> Listar(int? idProjeto)
         {
             var statement = @"
 
@@ -24,16 +24,17 @@ namespace TbNeo.Application.Queries
                                                     ff.idLogReference
                                     FROM            dbo.FeatureFlag ff
                                     INNER JOIN      dbo.Projeto p
-                                    ON              ff.idProjeto = p.Id;
+                                    ON              ff.idProjeto = p.Id
 
                             ";
 
+            if (idProjeto.HasValue)
+                statement += " WHERE ff.idProjeto = @idProjeto";
+
             using var con = this.GetConnection();
 
-            return await con.QueryAsync<FeatureFlagListagemQueryModel>(statement);
+            return await con.QueryAsync<FeatureFlagListagemQueryModel>(statement, new { idProjeto });
         }
-
-
 
         public async Task<FeatureFlagDetalhesQueryModel> Detalhes(int id)
         {

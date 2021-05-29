@@ -6,7 +6,7 @@ namespace TbNeo.Application.Queries
 {
     public interface IFeatureFlagQueries
     {
-        Task<IEnumerable<FeatureFlagListagemQueryModel>> Listar();
+        Task<IEnumerable<FeatureFlagListagemQueryModel>> Listar(int? idProjeto);
 
         Task<FeatureFlagDetalhesQueryModel> Detalhes(int id);
     }

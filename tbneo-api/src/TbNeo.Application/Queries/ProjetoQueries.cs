@@ -55,7 +55,7 @@ namespace TbNeo.Application.Queries
                                     FROM            dbo.Projeto p
                                     INNER JOIN      dbo.Usuario uc
                                     ON              p.IdCriadoPor = uc.id
-                                    INNER JOIN      dbo.Usuario ua
+                                    LEFT JOIN      dbo.Usuario ua
                                     ON              p.idAtualizadoPor = ua.id
                                     WHERE           p.id = @id;
 

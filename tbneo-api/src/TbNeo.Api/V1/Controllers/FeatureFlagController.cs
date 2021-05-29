@@ -26,9 +26,9 @@ namespace TbNeo.Api.V1.Controllers
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(int? idProjeto)
         {
-            var featuresFlag = await _featureFlagQueries.Listar();
+            var featuresFlag = await _featureFlagQueries.Listar(idProjeto);
 
             return CustomResponse(featuresFlag);
         }

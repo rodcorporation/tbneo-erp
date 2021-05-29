@@ -20,6 +20,6 @@ namespace TbNeo.Application.Queries.QueryModels
 
         public DateTime? AtualizadoEm { get; set; }
 
-        public string IdLogReference { get; set; }
+        public Guid IdLogReference { get; set; }
     }
 }

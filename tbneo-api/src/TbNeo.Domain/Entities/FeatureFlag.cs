@@ -63,12 +63,12 @@ namespace TbNeo.Domain.Entities
 
             Nome = nome;
 
-            if (Projeto.Id != projeto.Id)
+            if (IdProjeto != projeto.Id)
             {
                 _events.Add(new DataChangedEvent(this.IdLogReference,
                                                  nameof(Projeto),
                                                  projeto.Nome,
-                                                 Projeto.Nome,
+                                                 Projeto?.Nome,
                                                  alteradoPor.Id));
             }
 
